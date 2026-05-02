@@ -8,68 +8,60 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer(
-      builder: (context, ProviderClass providerClass, child) {
-        return Scaffold(
-          appBar: AppBar(
-            title: Text(
-              "Expense Tracker",
-              style: TextStyle(color: Colors.white),
+    ProviderClass providerClass = Provider.of<ProviderClass>(context);
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Expense Tracker", style: TextStyle(color: Colors.white)),
+        backgroundColor: Colors.blue,
+        elevation: 6.0,
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(
+            context,
+          ).push(MaterialPageRoute(builder: (context) => AddExpense()));
+        },
+        child: Icon(Icons.add),
+      ),
+      body: Column(
+        children: [
+          Container(
+            color: Colors.grey,
+            height: 100.0,
+            width: double.infinity,
+            child: Card(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: showData(providerClass),
+              ),
             ),
-            backgroundColor: Colors.blue,
-            elevation: 6.0,
           ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              Navigator.of(
-                context,
-              ).push(MaterialPageRoute(builder: (context) => AddExpense()));
-            },
-            child: Icon(Icons.add),
-          ),
-          body: Column(
-            children: [
-              Container(
-                color: Colors.grey,
-                height: 100.0,
-                width: double.infinity,
-                child: Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: showData(providerClass),
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Container(
-                  width: double.infinity,
-                  height: double.infinity,
-                  child: ListView.builder(
-                    itemCount: providerClass.dataList.length,
-                    itemBuilder: (context, index) {
-                      return Card(
-                        child: ListTile(
-                          leading: Text(providerClass.dataList[index].title),
-                          trailing: Text(
-                            "\$ ${providerClass.dataList[index].amount.toString()}",
-                            style: TextStyle(
-                              color:
-                                  providerClass.dataList[index].type ==
-                                      'Expense'
-                                  ? Colors.red
-                                  : Colors.green,
-                            ),
-                          ),
+          Expanded(
+            child: Container(
+              width: double.infinity,
+              height: double.infinity,
+              child: ListView.builder(
+                itemCount: providerClass.dataList.length,
+                itemBuilder: (context, index) {
+                  return Card(
+                    child: ListTile(
+                      leading: Text(providerClass.dataList[index].title),
+                      trailing: Text(
+                        "\$ ${providerClass.dataList[index].amount.toString()}",
+                        style: TextStyle(
+                          color: providerClass.dataList[index].type == 'Expense'
+                              ? Colors.red
+                              : Colors.green,
                         ),
-                      );
-                    },
-                  ),
-                ),
+                      ),
+                    ),
+                  );
+                },
               ),
-            ],
+            ),
           ),
-        );
-      },
+        ],
+      ),
     );
   }
 
