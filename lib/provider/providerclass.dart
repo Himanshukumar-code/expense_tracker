@@ -2,19 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:expense_tracker/Model/expensemodel.dart';
 
 class ProviderClass extends ChangeNotifier {
+  List<bool> isSelected = List.generate(2, (_) => false);
   late List<Expensemodel> dataList = [
     Expensemodel(
       id: 1,
-      title: "Education",
+      title: "Salary",
       amount: 1000.0,
       type: "Income",
-      dateTime: DateTime.now(),
-    ),
-    Expensemodel(
-      id: 2,
-      title: "Education",
-      amount: 100.0,
-      type: "Expense",
       dateTime: DateTime.now(),
     ),
   ];
@@ -31,6 +25,15 @@ class ProviderClass extends ChangeNotifier {
   double get totalMoneyLeft => getIncomeAmount - getExpenseAmount;
   void addToList(Expensemodel expenseModel) {
     dataList.add(expenseModel);
+    notifyListeners();
+  }
+
+  // function for toggle changes
+  void toggle(int index) {
+    for (int i = 0; i < isSelected.length; i++) {
+      isSelected[i] = false;
+    }
+    isSelected[index] = !isSelected[index];
     notifyListeners();
   }
 }

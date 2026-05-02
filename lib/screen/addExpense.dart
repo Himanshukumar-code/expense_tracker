@@ -7,7 +7,7 @@ class AddExpense extends StatelessWidget {
   AddExpense({super.key});
   TextEditingController titleController = TextEditingController();
   TextEditingController amountController = TextEditingController();
-  List<bool> isSelected = List.generate(2, (_) => false);
+
   @override
   Widget build(BuildContext context) {
     ProviderClass providerClass = Provider.of<ProviderClass>(context);
@@ -28,7 +28,7 @@ class AddExpense extends StatelessWidget {
         TextFormField(
           controller: titleController,
           decoration: InputDecoration(
-            label: Text("Label"),
+            label: Text("Title"),
             hint: Text("Enter Title"),
           ),
         ),
@@ -36,17 +36,14 @@ class AddExpense extends StatelessWidget {
           controller: amountController,
           decoration: InputDecoration(
             label: Text("Amount"),
-            hint: Text("Enter Title"),
+            hint: Text("Enter Amount"),
           ),
         ),
         ToggleButtons(
           selectedColor: Colors.green,
-          isSelected: isSelected,
+          isSelected: providerClass.isSelected,
           onPressed: (int index) {
-            for (int i = 0; i < isSelected.length; i++) {
-              isSelected[i] = false;
-            }
-            isSelected[index] = !isSelected[index];
+            providerClass.toggle(index);
           },
           children: <Widget>[
             Padding(
@@ -104,16 +101,12 @@ class AddExpense extends StatelessWidget {
       print("Invalid amount");
       return;
     }
-
-    print(
-      "save data ${providerClass.dataList.length}${isSelected[0] ? "Expense" : "Income"}",
-    );
     providerClass.addToList(
       Expensemodel(
         id: providerClass.dataList.length,
         title: titleController!.text,
         amount: double.parse(amountController!.text),
-        type: isSelected[0] ? "Expense" : "Income",
+        type: providerClass.isSelected[0] ? "Expense" : "Income",
         dateTime: DateTime.now(),
       ),
     );

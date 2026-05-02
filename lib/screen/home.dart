@@ -11,9 +11,10 @@ class HomeScreen extends StatelessWidget {
     ProviderClass providerClass = Provider.of<ProviderClass>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text("Expense Tracker", style: TextStyle(color: Colors.white)),
-        backgroundColor: Colors.blue,
+        centerTitle: true,
+        title: Text("Expense Tracker", style: TextStyle(color: Colors.black)),
         elevation: 6.0,
+        backgroundColor: Colors.white,
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -26,10 +27,10 @@ class HomeScreen extends StatelessWidget {
       body: Column(
         children: [
           Container(
-            color: Colors.grey,
             height: 100.0,
             width: double.infinity,
             child: Card(
+              color: Colors.grey[200],
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: showData(providerClass),
@@ -45,10 +46,18 @@ class HomeScreen extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return Card(
                     child: ListTile(
-                      leading: Text(providerClass.dataList[index].title),
+                      title: Text(
+                        providerClass.dataList[index].title,
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      subtitle: Text(
+                        providerClass.dataList[index].dateTime.toString(),
+                      ),
                       trailing: Text(
-                        "\$ ${providerClass.dataList[index].amount.toString()}",
+                        "\$${providerClass.dataList[index].amount.toString()}",
                         style: TextStyle(
+                          fontSize: 10.0,
+                          fontWeight: FontWeight.bold,
                           color: providerClass.dataList[index].type == 'Expense'
                               ? Colors.red
                               : Colors.green,
@@ -71,20 +80,21 @@ class HomeScreen extends StatelessWidget {
 
     return Column(
       children: [
-        Text("Total Money:${providerClass.totalMoneyLeft}"),
+        Text(
+          "Monthly Summary",
+          style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+        ),
         Spacer(),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Text(
-              "Income:${providerClass.getIncomeAmount}",
-              style: TextStyle(color: Colors.green),
-            ),
-            Text(
-              "Expense:${providerClass.getExpenseAmount}",
-              style: TextStyle(color: Colors.red),
-            ),
+            Text("Total Income:\$${providerClass.getIncomeAmount}"),
+            Text("Total Expense:\$${providerClass.getExpenseAmount}"),
           ],
+        ),
+        Text(
+          "Remaining Balance:\$${providerClass.totalMoneyLeft}",
+          style: TextStyle(fontWeight: FontWeight.bold),
         ),
       ],
     );
