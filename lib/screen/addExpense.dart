@@ -8,23 +8,16 @@ class AddExpense extends StatelessWidget {
   TextEditingController titleController = TextEditingController();
   TextEditingController amountController = TextEditingController();
   List<bool> isSelected = List.generate(2, (_) => false);
-
   @override
   Widget build(BuildContext context) {
-    return Consumer(
-      builder: (context, ProviderClass providerClass, child) {
-        return Scaffold(
-          appBar: AppBar(
-            leading: Icon(Icons.wallet_rounded, color: Colors.white),
-            title: Text(
-              "Add  your Expense",
-              style: TextStyle(color: Colors.white),
-            ),
-            backgroundColor: Colors.blue,
-          ),
-          body: showForm(providerClass, context),
-        );
-      },
+    ProviderClass providerClass = Provider.of<ProviderClass>(context);
+    return Scaffold(
+      appBar: AppBar(
+        leading: Icon(Icons.wallet_rounded, color: Colors.white),
+        title: Text("Add  your Expense", style: TextStyle(color: Colors.white)),
+        backgroundColor: Colors.blue,
+      ),
+      body: showForm(providerClass, context),
     );
   }
 
