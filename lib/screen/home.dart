@@ -53,6 +53,13 @@ class HomeScreen extends StatelessWidget {
                       subtitle: Text(
                         providerClass.dataList[index].dateTime.toString(),
                       ),
+                      title: Text(
+                        providerClass.dataList[index].title,
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      subtitle: Text(
+                        providerClass.dataList[index].dateTime.toString(),
+                      ),
                       trailing: Text(
                         "\$${providerClass.dataList[index].amount.toString()}",
                         style: TextStyle(
@@ -88,6 +95,13 @@ class HomeScreen extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
+            Text("Total Income:\$${providerClass.getIncomeAmount}"),
+            Text("Total Expense:\$${providerClass.getExpenseAmount}"),
+          ],
+        ),
+        Text(
+          "Remaining Balance:\$${providerClass.totalMoneyLeft}",
+          style: TextStyle(fontWeight: FontWeight.bold),
             Text("Total Income:\$${providerClass.getIncomeAmount}"),
             Text("Total Expense:\$${providerClass.getExpenseAmount}"),
           ],
